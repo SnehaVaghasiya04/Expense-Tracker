@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Dashboard</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f6f9;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: linear-gradient(to right, #2c3e50, #34495e);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            margin: 0;
+            color: #f1c40f;
+        }
+
+        .logout-btn {
+            background: #e74c3c;
+            border: none;
+            padding: 8px 15px;
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        /* CARDS */
+        .container {
+            padding: 20px;
+        }
+
+        .cards {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            flex: 1;
+            padding: 20px;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+        }
+
+        .income { background: #27ae60; }
+        .expense { background: #e74c3c; }
+        .balance { background: #2980b9; }
+
+        /* FORM */
+        .form-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        input, select {
+            padding: 10px;
+            margin: 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 20px;
+            background: #f39c12;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* SIDE LAYOUT */
+        .data-section {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .table-box {
+            flex: 2;
+        }
+
+       .chart-box {
+    flex: 1;
+    height: 260px;   /* 🔥 smaller height */
+    max-width: 320px; /* 🔥 width control */
+    margin: auto;
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+}
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #34495e;
+            color: white;
+            padding: 12px;
+        }
+
+        td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+
+    </style>
+</head>
+
+<body ng-controller="expCtrl">
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <h2>Expense Tracker</h2>
+    <div>
+        Welcome, {{username}}
+        <button class="logout-btn" ng-click="logout()">Logout</button>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- CARDS -->
+    <div class="cards">
+        <div class="card income">
+            <h3>Total Income</h3>
+            <h2>{{totalIncome}}</h2>
+        </div>
+
+        <div class="card expense">
+            <h3>Total Expense</h3>
+            <h2>{{totalExpense}}</h2>
+        </div>
+
+        <div class="card balance">
+            <h3>Balance</h3>
+            <h2>{{balance}}</h2>
+        </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-box">
+        <form ng-submit="addExpense(newExp)">
+            <input type="number" ng-model="newExp.amount" placeholder="Amount" required>
+
+            <select ng-model="newExp.type">
+                <option>Income</option>
+                <option>Expense</option>
+            </select>
+
+            <input type="text" ng-model="newExp.category" placeholder="Category" required>
+
+            <button ng-if="!editMode">Add</button>
+            <button type="button" ng-if="editMode" ng-click="updateExpense(newExp)">Update</button>
+        </form>
+    </div>
+
+    <!-- TABLE + CHART -->
+    <div class="data-section">
+
+        <!-- TABLE -->
+        <div class="table-box">
+            <table>
+                <tr>
+                    <th>Amount</th>
+                    <th>Type</th>
+                    <th>Category</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+
+                <tr ng-repeat="e in expenses">
+                    <td>{{e.amount}}</td>
+                    <td>{{e.type}}</td>
+                    <td>{{e.category}}</td>
+
+                    <td><button ng-click="editExpense(e)">Edit</button></td>
+                    <td><button ng-click="deleteExpense(e.id)">Delete</button></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- CHART -->
+        <div class="chart-box">
+            <h3>Expense Chart</h3>
+            <canvas id="myChart" style="width:100%; height:200px;"></canvas>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

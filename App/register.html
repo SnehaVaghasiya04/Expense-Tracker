@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Register</title>
+
+    <!-- Angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+    <!-- CSS -->
+    <style>
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #dfe9f3, #ffffff);
+        }
+
+        .container {
+            width: 470px;
+            margin: 60px auto;
+            padding: 30px;
+            background: #2c3e50;
+            border-radius: 12px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            color: white;
+        }
+
+        h2 {
+            text-align: center;
+            color: #f1c40f;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border: 2px solid #f39c12;
+        }
+
+        /* ROW LAYOUT */
+        .row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .col {
+            flex: 1;
+            padding: 10px;
+        }
+
+        /* GENDER */
+        .gender-group {
+            display: flex;
+            justify-content: space-around;
+            margin: 10px 0;
+        }
+
+        /* BUTTON */
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 25px;
+            background: #f39c12;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #e67e22;
+        }
+
+        /* LINK */
+        .link {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .link a {
+            color: #f1c40f;
+            text-decoration: none;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+
+<body ng-controller="regCtrl">
+
+<div class="container">
+
+<h2>Register 📝</h2>
+
+<form ng-submit="register()">
+
+    <!-- ROW 1 -->
+    <div class="row">
+        <div class="col">
+            <label>Username</label>
+            <input type="text" ng-model="user.username" required>
+        </div>
+
+        <div class="col">
+            <label>Password</label>
+            <input type="password" ng-model="user.password" required>
+        </div>
+    </div>
+
+    <!-- ROW 2 -->
+    <div class="row">
+        <div class="col">
+            <label>Email</label>
+            <input type="email" ng-model="user.email" required>
+        </div>
+
+        <div class="col">
+            <label>Mobile</label>
+            <input type="text" ng-model="user.mobile" required>
+        </div>
+    </div>
+
+    <!-- GENDER -->
+    <label>Gender</label>
+    <div class="gender-group">
+        <label><input type="radio" ng-model="user.gender" value="Male"> Male</label>
+        <label><input type="radio" ng-model="user.gender" value="Female"> Female</label>
+    </div>
+
+    <!-- CITY -->
+    <label>City</label>
+    <select ng-model="user.city" required>
+        <option value="">Select City</option>
+        <option>Ahmedabad</option>
+        <option>Surat</option>
+        <option>Rajkot</option>
+        <option>Vadodara</option>
+    </select>
+
+    <button type="submit">Register</button>
+
+</form>
+
+<p>{{msg}}</p>
+
+<div class="link">
+    <a href="login.html">Already have an account? Login</a>
+</div>
+
+</div>
+
+<script>
+let app = angular.module("myApp", []);
+
+app.controller("regCtrl", function($scope, $http) {
+
+    $scope.user = {};
+
+    $scope.register = function() {
+        $http.post("/api/register", $scope.user).then(function(res) {
+            $scope.msg = res.data.msg;
+            $scope.user = {};
+        });
+    };
+
+});
+</script>
+
+</body>
+</html>

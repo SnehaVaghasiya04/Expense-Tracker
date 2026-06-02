@@ -1,0 +1,112 @@
+/* BODY */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to right, #dfe9f3, #ffffff);
+}
+
+/* CARD */
+.container {
+    width: 470px;
+    margin: 60px auto;
+    padding: 30px;
+    background: #2c3e50;
+    border-radius: 12px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    color: white;
+}
+
+/* TITLE */
+.container h2 {
+    text-align: center;
+    color: #f1c40f;
+    margin-bottom: 25px;
+}
+
+/* INPUT */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+}
+
+/* FOCUS */
+input:focus, select:focus {
+    outline: none;
+    border: 2px solid #f39c12;
+}
+
+/* GENDER GROUP */
+.gender-group {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px 0;
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 25px;
+    background: #f39c12;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #e67e22;
+}
+
+/* LINK */
+.link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.link a {
+    color: #f1c40f;
+    text-decoration: none;
+}
+
+.link a:hover {
+    text-decoration: underline;
+}
+
+/* MESSAGE */
+p {
+    text-align: center;
+    margin-top: 10px;
+}
+label {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: left;
+}
+
+/* 2 column layout */
+.row {
+    display: flex;
+    gap: 10px;
+}
+
+.row .col {
+    flex: 1;
+    padding: 8px;
+}
+
+/* inputs full width */
+.row input,
+.row select {
+    width: 100%;
+}

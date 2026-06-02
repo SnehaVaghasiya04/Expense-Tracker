@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Login</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+
+
+
+<body ng-controller="loginCtrl">
+
+<div class="container">
+
+<h2>User Login 🔐</h2>
+
+<form ng-submit="login()">
+
+<input type="text" ng-model="user.username" placeholder="Username" required>
+
+<input type="password" ng-model="user.password" placeholder="Password" required>
+
+<button type="submit">Login</button>
+
+</form>
+
+<p>{{msg}}</p>
+
+<a href="register.html">Don't have an account? Register</a>
+
+</div>
+
+
+
+<script>
+let app = angular.module("myApp", []);
+
+app.controller("loginCtrl", function($scope, $http) {
+
+    $scope.user = {};
+
+    $scope.login = function() {
+        $http.post("/api/login", $scope.user).then(function(res) {
+
+            if(res.data.success){
+                // ⭐ USERNAME STORE
+                localStorage.setItem("username", $scope.user.username);
+
+                window.location.href = "dashboard.html";
+            } else {
+                $scope.msg = "Invalid Username or Password";
+            }
+
+        });
+    };
+
+});
+</script>
+
+</body>
+</html>
